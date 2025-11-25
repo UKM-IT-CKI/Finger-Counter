@@ -67,5 +67,5 @@ Izinkan browser untuk mengakses kamera Anda saat diminta. Tunjukkan tangan Anda 
 └── README.md          # Dokumentasi proyek
 ```
 
----
-Dibuat dengan ❤️ oleh Tim UKM IT.
+🤝 Kontribusi & Credits
+Dibuat dengan ❤️ untuk UKM IT Cipta Karya Informatika.
