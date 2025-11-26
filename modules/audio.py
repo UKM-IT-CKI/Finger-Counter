@@ -1,6 +1,7 @@
 from gtts import gTTS
 import os
 import base64
+import tempfile
 from typing import Optional, Dict
 
 class AudioManager:
@@ -10,10 +11,16 @@ class AudioManager:
             5: "lima", 6: "enam", 7: "tujuh", 8: "delapan", 9: "sembilan", 10: "sepuluh"
         }
         
-        # Setup cache directory
-        self.cache_dir = os.path.join(os.getcwd(), "audio_cache")
+        # Setup cache directory using system temp folder
+        # This is safer for cloud environments (Hugging Face, etc) where write permissions 
+        # to the app directory might be restricted
+        self.cache_dir = os.path.join(tempfile.gettempdir(), "finger_counter_audio_cache")
         if not os.path.exists(self.cache_dir):
-            os.makedirs(self.cache_dir)
+            try:
+                os.makedirs(self.cache_dir)
+            except OSError:
+                # Fallback if creation fails, though tempdir usually works
+                pass
 
     def get_text_for_number(self, number: int) -> Optional[str]:
         return self.angka_teks.get(number)
@@ -38,4 +45,5 @@ class AudioManager:
             # HTML for autoplaying audio
             return f'<audio autoplay="true" src="data:audio/mp3;base64,{audio_base64}">'
         except Exception as e:
+            print(f"Audio Error: {e}")
             return ""
